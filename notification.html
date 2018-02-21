@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notifications From Light monitor</title>
+  <script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+  <script>
+    //Enable Pusher Logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    //Create a new instance of pusher with your credentials
+    var pusher = new Pusher('12ca90be01ce574e4fe6',
+      {
+        cluster: 'eu',
+        encrypted: true
+      });
+
+    //subscribe to a channel you would listen on
+    var channel = pusher.subscribe('my-channel');
+    
+    //What happens when my-event is fired
+    channel.bind('my-event', function(data){
+      //gets the ul in the dom
+      var ul = document.querySelector('ul');
+      //creates a li
+      var li = document.createElement('li');
+      //Attaches the data received to the text node
+      var itemText = document.createTextNode(data.value);
+      //Append the data to the li
+      li.appendChild(itemText);
+      //Append the li to the ul
+      ul.appendChild(li);
+    });
+  </script>
+</head>
+<body>
+  <ul></ul>
+</body>
+</html>
